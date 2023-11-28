@@ -9,7 +9,7 @@ async function index(req, res, next) {
 
     const filters = req.query.filters
     const queryFilter = {}
-    const numberOfElementPerPage = 3
+    // const numberOfElementPerPage = 3
     const currentPage = req.query.currentPage || 1
 
     if (filters && filters.title) {
@@ -26,8 +26,8 @@ async function index(req, res, next) {
     try {
         const numberAllPosts = await prisma.post.count({ where: queryFilter });
         const data = await prisma.post.findMany({
-            skip: (currentPage - 1) * numberOfElementPerPage,
-            take: numberOfElementPerPage,
+            // skip: (currentPage - 1) * numberOfElementPerPage,
+            // take: numberOfElementPerPage,
             where: queryFilter,
             include : {
                 tags : true,

@@ -2,6 +2,7 @@
 const express = require("express")
 const fs = require("fs")
 const path = require("path")
+const cors = require("cors")
 
 // import local files
 const postRouters = require("./routes/postRoutes")
@@ -11,9 +12,18 @@ const categoryController = require("./routes/categoryRoutes")
 const errorsMiddleware = require("./middleware/errorsMiddleware")
 const notFound = require("./middleware/routeNotFound")
 
+const corsOptions = {
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,PATCH,HEAD,DELETE",
+    credentials: true
+}
 
 // create istance of express 
 const app = express()
+
+//enable cors
+app.use(cors(corsOptions))
+
 // configure static files
 app.use(express.static("public"))
 
