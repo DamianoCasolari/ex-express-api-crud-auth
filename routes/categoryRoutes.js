@@ -5,6 +5,7 @@ const CategoriesCreateValidation = require("../validation/CategoriesCreateValida
 const { body, checkSchema} = require("express-validator")
 
 
+router.get("/",categoryController.index)
 router.post("/",checkSchema(CategoriesCreateValidation),categoryController.store)
 
 

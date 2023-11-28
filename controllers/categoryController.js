@@ -3,6 +3,33 @@ const prisma = new PrismaClient()
 const { validationResult, matchedData } = require("express-validator")
 const customError = require("../utilities/customErrors")
 
+
+async function index(req, res, next) {
+
+    
+    const validation = validationResult(req)
+
+    if (!validation.isEmpty()) {
+        const errorMessages = validation.array().map(error => error.msg);
+        next( new customError( errorMessages.join(', '), 400))
+    }
+
+    try {
+        const data = await prisma.category.findMany();
+
+        if (data.length == 0) {
+            next(new Error("Nessun Risultao"))
+        }
+
+        return res.json(data);
+    } catch (error) {
+        console.error("Errore durante l'elaborazione della richiesta:", error);
+        next(new Error("Errore interno del server"))
+    }
+}
+
+
+
 async function store(req, res, next) {
 
     const validation = validationResult(req)
@@ -31,4 +58,4 @@ async function store(req, res, next) {
 
 }
 
-module.exports = { store }
+module.exports = { store,index }

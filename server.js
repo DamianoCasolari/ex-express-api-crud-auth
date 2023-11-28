@@ -30,6 +30,8 @@ app.use(express.static("public"))
 // configure body-parser for "application/json" 
 app.use(express.json())
 
+// configure body-parser for "application/x-www-form-urlencoded" 
+app.use(express.urlencoded({ extended: true }));
 // Crete routes GET
 app.use("/posts", postRouters)
 app.use("/tags", tagRoutes)
